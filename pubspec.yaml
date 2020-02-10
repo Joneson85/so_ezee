@@ -1,5 +1,5 @@
 name: so_ezee
-description: A new Flutter project.
+description: Connecting people is so easy.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -14,20 +14,35 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  firebase_core: ^0.4.3+2
+  cloud_firestore: ^0.13.0+1
+  firebase_auth: ^0.15.3+1
+  firebase_storage: ^3.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  intl: ^0.16.0
+  shared_preferences: ^0.5.6
+  flutter_rating_bar: ^3.0.1+1 #Documentation at https://pub.dev/packages/flutter_rating_bar
+  uuid: 2.0.4  #https://pub.dev/packages/uuid
+  flutter_image_compress: ^0.6.5+1
+  path_provider: ^1.5.1
+  image_picker: ^0.6.3+1
+  cached_network_image: ^2.0.0  #https://pub.dev/packages/cached_network_image
+  rxdart: ^0.23.1 #https://pub.dev/packages/rxdart
+  camera: ^0.5.7+3
+  path: ^1.6.4
+  google_maps_webservice: ^0.0.16 #https://pub.dev/packages/google_maps_webservice
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -50,6 +65,9 @@ flutter:
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
+
+  assets:
+  - images/
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
