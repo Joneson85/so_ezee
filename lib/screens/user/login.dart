@@ -304,7 +304,6 @@ class _LoginScreenState extends State<LoginScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: primaryColorDark),
       ),
-      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: <Widget>[

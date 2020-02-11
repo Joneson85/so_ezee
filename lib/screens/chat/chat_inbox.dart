@@ -76,7 +76,7 @@ class ChatSessionsStream extends StatefulWidget {
 }
 
 class _ChatSessionsStreamState extends State<ChatSessionsStream> {
-  //Load chat screen with recipient
+ //Load chat screen with recipient
   void _loadChatScreen(String recipientID) {
     Navigator.push(
       context,
@@ -89,7 +89,7 @@ class _ChatSessionsStreamState extends State<ChatSessionsStream> {
     );
   }
 
-  _displayProfileImage(profileImageUrl) {
+   _displayProfileImage(profileImageUrl) {
     if (profileImageUrl.isEmpty) {
       return AssetImage(kUserPlaceholderImage);
     } else {
@@ -164,5 +164,49 @@ class _ChatSessionsStreamState extends State<ChatSessionsStream> {
       print(e);
       return SizedBox.shrink();
     }
+  }
+}
+
+class ChatSessionLabel extends StatefulWidget {
+  final ChatSession chatSession;
+  ChatSessionLabel(this.chatSession);
+  @override
+  _ChatSessionLabelState createState() => _ChatSessionLabelState();
+}
+
+class _ChatSessionLabelState extends State<ChatSessionLabel> {
+  bool _isLoading = false;
+  var _image;
+  @override
+  void initState() {
+    super.initState();
+    _image = _loadRecipientProfileImage();
+  }
+
+  _loadRecipientProfileImage() async {
+    _isLoading = true;
+    DocumentSnapshot recipientSnapshot = await db
+        .collection(kDB_users)
+        .document(widget.chatSession.recipientID)
+        .get();
+    if (recipientSnapshot[kDB_profileImageUrl] != null) {
+      if (recipientSnapshot[kDB_profileImageUrl].isNotEmpty) {
+        _image = CachedNetworkImageProvider(
+          recipientSnapshot[kDB_profileImageUrl],
+        );
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _isLoading
+        ? CircularProgressIndicator()
+        : Container(child: Text('Hello world'));
   }
 }

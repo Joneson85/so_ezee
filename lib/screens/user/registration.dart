@@ -197,14 +197,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
-  Widget _logoAndTitle() {
+  Widget _logo() {
+    return Container(
+      child: Image.asset(mainLogoPath),
+      height: 80.0,
+      width: 80.0,
+    );
+  }
+
+  Widget _title() {
     return Row(
       children: <Widget>[
-        Container(
-          child: Image.asset(mainLogoPath),
-          height: 80.0,
-          width: 80.0,
-        ),
         Expanded(
           child: Text(
             'Account Registration',
@@ -278,7 +281,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     _showNotification(),
-                    _logoAndTitle(),
+                    _logo(),
+                    SizedBox(height: 10),
+                    _title(),
                     _inputForm(),
                     _registerButton(),
                     _logInPromptButton(),

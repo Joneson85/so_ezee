@@ -198,24 +198,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _displayEditBio() {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.business, color: primaryColor),
-          title: Text(
-            'Edit Business Profile',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          ),
-          trailing: Icon(Icons.arrow_forward_ios, color: primaryColor),
-          onTap: () {
-            MaterialPageRoute route = MaterialPageRoute(
-              builder: (BuildContext context) => EditVendorBioScreen(_userObj),
-            );
-            Navigator.push(context, route);
-          },
-        ),
-        const Divider(thickness: 1.5, indent: 25, endIndent: 25),
-      ],
+    return ListTile(
+      leading: Icon(Icons.business, color: primaryColor),
+      title: Text(
+        'Edit Business Profile',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      ),
+      trailing: Icon(Icons.arrow_forward_ios, color: primaryColor),
+      onTap: () {
+        MaterialPageRoute route = MaterialPageRoute(
+          builder: (BuildContext context) => EditVendorBioScreen(_userObj),
+        );
+        Navigator.push(context, route);
+      },
     );
   }
 
