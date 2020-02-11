@@ -76,7 +76,7 @@ class ChatSessionsStream extends StatefulWidget {
 }
 
 class _ChatSessionsStreamState extends State<ChatSessionsStream> {
- //Load chat screen with recipient
+  //Load chat screen with recipient
   void _loadChatScreen(String recipientID) {
     Navigator.push(
       context,
@@ -85,51 +85,6 @@ class _ChatSessionsStreamState extends State<ChatSessionsStream> {
           recipientID: recipientID,
           userID: widget.userID,
         ),
-      ),
-    );
-  }
-
-   _displayProfileImage(profileImageUrl) {
-    if (profileImageUrl.isEmpty) {
-      return AssetImage(kUserPlaceholderImage);
-    } else {
-      return CachedNetworkImageProvider(profileImageUrl);
-    }
-  }
-
-  Widget _sessionLabel(ChatSession chatSession) {
-    return GestureDetector(
-      onTap: () => _loadChatScreen(chatSession.recipientID),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(10),
-            child: CircleAvatar(
-              radius: 24.0,
-              backgroundColor: Colors.grey,
-              backgroundImage: _displayProfileImage(
-                chatSession.recipientProfileImageUrl,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.only(top: 10),
-              margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.black26),
-                ),
-              ),
-              height: 75,
-              child: Text(
-                chatSession.recipientName,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -150,12 +105,18 @@ class _ChatSessionsStreamState extends State<ChatSessionsStream> {
           } else {
             List<Widget> sessionList = [];
             for (DocumentSnapshot docSnapshot in snapshot.data.documents) {
+              ChatSession _session = ChatSession.fromDoc(docSnapshot);
               sessionList.add(
-                _sessionLabel(ChatSession.fromDoc(docSnapshot)),
+                GestureDetector(
+                  onTap: () => _loadChatScreen(_session.recipientID),
+                  child: ChatSessionLabel(_session),
+                ),
               );
             }
             return Expanded(
-              child: ListView(children: sessionList),
+              child: ListView(
+                children: sessionList,
+              ),
             );
           }
         },
@@ -175,38 +136,65 @@ class ChatSessionLabel extends StatefulWidget {
 }
 
 class _ChatSessionLabelState extends State<ChatSessionLabel> {
-  bool _isLoading = false;
   var _image;
   @override
   void initState() {
     super.initState();
-    _image = _loadRecipientProfileImage();
+    _image = AssetImage(kUserPlaceholderImage);
+    _loadRecipientProfileImage();
   }
 
   _loadRecipientProfileImage() async {
-    _isLoading = true;
-    DocumentSnapshot recipientSnapshot = await db
-        .collection(kDB_users)
-        .document(widget.chatSession.recipientID)
-        .get();
-    if (recipientSnapshot[kDB_profileImageUrl] != null) {
-      if (recipientSnapshot[kDB_profileImageUrl].isNotEmpty) {
-        _image = CachedNetworkImageProvider(
-          recipientSnapshot[kDB_profileImageUrl],
-        );
-        if (mounted) {
-          setState(() {
-            _isLoading = false;
-          });
+    try {
+      DocumentSnapshot recipientSnapshot = await db
+          .collection(kDB_users)
+          .document(widget.chatSession.recipientID)
+          .get();
+      if (recipientSnapshot[kDB_profileImageUrl] != null) {
+        if (recipientSnapshot[kDB_profileImageUrl].isNotEmpty) {
+          if (mounted)
+            setState(() {
+              _image = CachedNetworkImageProvider(
+                recipientSnapshot[kDB_profileImageUrl],
+              );
+            });
         }
       }
+    } catch (e) {
+      print(e);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading
-        ? CircularProgressIndicator()
-        : Container(child: Text('Hello world'));
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(10),
+          child: CircleAvatar(
+            radius: 24.0,
+            backgroundColor: Colors.grey,
+            backgroundImage: _image,
+          ),
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.only(top: 10),
+            margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Colors.black26),
+              ),
+            ),
+            height: 75,
+            child: Text(
+              widget.chatSession.recipientName,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -85,10 +85,12 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _loadRecipientProfile(DocumentSnapshot recipientData) {
-    if (recipientData.data[kDB_isvendor])
-      _recipient = Vendor.fromDoc(recipientData);
-    else
+    if (recipientData.data[kDB_isvendor] == null ||
+        recipientData.data[kDB_isvendor] == false) {
       _recipient = User.fromDoc(recipientData);
+    } else {
+      _recipient = Vendor.fromDoc(recipientData);
+    }
   }
 
   void _saveSessionToChatInbox({
@@ -119,7 +121,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  Widget _displayProfileImage(profileImageUrl) {
+  Widget _displayProfileImage(String profileImageUrl) {
     return Container(
       margin: EdgeInsets.fromLTRB(10, 10, 20, 10),
       child: CircleAvatar(
