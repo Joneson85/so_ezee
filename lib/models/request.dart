@@ -44,7 +44,7 @@ class Request {
   }) : this.attachedImageUrls =
             attachedImageUrls ?? []; //prevent the list from becoming null
 
-  Future<DocumentReference> writeRequestToDB() async {
+  Future<void> writeRequestToDB() async {
     DocumentReference requestDocRef = db.collection(kDB_requests).document();
     /*
     Save images to cloud storage. This needs to be done before

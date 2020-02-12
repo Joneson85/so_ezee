@@ -65,7 +65,6 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
 
   void _loadInitialData() async {
     _isLoading = true;
-    print("loading data");
     locationDetails = RequestLocation(
       latitude: -1,
       longitude: -1,
@@ -74,7 +73,6 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
     _selectedApptTimestamp = DateTime.now();
     await _loadUserData();
     await _loadRequestCategories(); //Pre-load categories for 1st step of workflow
-    print("data loaded");
     if (mounted) setState(() => _isLoading = false);
   }
 
@@ -168,14 +166,12 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
 
   void _loadSubCategories(RequestCategory reqCategory) async {
     _isLoading = true;
-    print("loading sub cats");
     await reqCategory.fetchSubCategories();
     if (mounted) setState(() => _isLoading = false);
   }
 
   void _loadPropertyTypes() async {
     _isLoading = true;
-    print("loading prop types");
     QuerySnapshot querySnapshot =
         await db.collection(kDB_property_types).getDocuments();
     for (var doc in querySnapshot.documents) {
@@ -201,13 +197,11 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
 
   void _loadMainItems() async {
     _isLoading = true;
-    print("loading main items");
     await _selectedCategory.fetchMainItems();
     if (mounted) setState(() => _isLoading = false);
   }
 
   void _loadSubItems(MainItem mainItem) async {
-    print("loading sub items");
     _isLoading = true;
     await mainItem.fetchSubItems();
     if (mounted) {
@@ -295,7 +289,6 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
             return null;
         },
         onEditingComplete: (() {
-          print("editing completed");
           FocusScope.of(context).unfocus();
           if (mounted) setState(() => _allowNext = true);
         }),
@@ -321,7 +314,6 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
             if (mounted) {
               setState(
                 () {
-                  print("smth selected");
                   //Storing the selected category and strid into memory
                   _selectedCategoryStrID = selectedVal;
                   _selectedCategory = _requestCategories.firstWhere(
@@ -535,7 +527,6 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
     List<Widget> _options = [];
     _allowNext = false;
     for (PropertyType _propType in _propertyTypes) {
-      print("redraw property options");
       if (_selectedPropertyTypeStrID == _propType.strID) _allowNext = true;
       _options.add(
         RadioListTile(
@@ -594,7 +585,6 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
   }
 
   Widget _stepControlButtons(int currStep) {
-    print("redrawing buttons");
     if (_isOtherSelected && _textEditingController.text.isEmpty)
       _allowNext = false;
     return Row(
@@ -627,10 +617,8 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
     switch (workflowStep) {
       //Request category selection
       case 0:
-        print("case 0");
         return _displayCategorySelection();
       case 1:
-        print("case 1");
         return _displaySubcategorySelection();
       case 2:
         return _displayMainItemSelection();
@@ -875,11 +863,14 @@ class RequestWorkflowScreenState extends State<RequestWorkflowScreen> {
       description: _description,
       attachedImageFiles: imageFiles,
     );
-
-    DocumentReference _docRef = await _request.writeRequestToDB();
+    try {
+      await _request.writeRequestToDB();
+    } catch (e) {
+      print(e);
+      if (mounted) setState(() => _isLoading = false);
+      Navigator.of(context).pop();
+    }
     if (mounted) setState(() => _isLoading = false);
-    print('Request user name = ' + _request.userName);
-    print('Request successfully saved : ' + _docRef.documentID);
     Navigator.of(context).pop();
   }
 

@@ -492,6 +492,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         iconTheme: IconThemeData(color: primaryColor),
         elevation: 3,
@@ -503,31 +504,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: ListView(
-          children: <Widget>[
-            _isLoading
-                ? LinearProgressIndicator(
-                    backgroundColor: Colors.white,
-                    valueColor: AlwaysStoppedAnimation(primaryColor),
-                  )
-                : SizedBox.shrink(),
-            Padding(
-              padding: EdgeInsets.all(30.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    _profileImageWidget(),
-                    _changeProfileImageButton(),
-                    _displayNameFormField(),
-                    _emailFormField(),
-                    _passwordFormField(),
-                    _saveProfileButton(),
-                  ],
+        child: SafeArea(
+          child: ListView(
+            children: <Widget>[
+              _isLoading
+                  ? LinearProgressIndicator(
+                      backgroundColor: Colors.white,
+                      valueColor: AlwaysStoppedAnimation(primaryColor),
+                    )
+                  : SizedBox.shrink(),
+              Padding(
+                padding: EdgeInsets.all(30.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      _profileImageWidget(),
+                      _changeProfileImageButton(),
+                      _displayNameFormField(),
+                      _emailFormField(),
+                      _passwordFormField(),
+                      _saveProfileButton(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

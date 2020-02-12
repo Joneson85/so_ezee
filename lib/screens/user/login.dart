@@ -80,20 +80,16 @@ class _LoginScreenState extends State<LoginScreen> {
         );
         _currUser = await FirebaseAuth.instance.currentUser();
         _currUser.reload();
-        print('User verified? ---> ' + _currUser.isEmailVerified.toString());
         if (_currUser.isEmailVerified) {
           _loadHomePage(_currUser);
         } else {
-          //TODO: Uncomment below codes to turn on verification check outside of dev environment
-          /*_notification = 'Please verify your account before logging in';
-          _setLoading(false);*/
-          _loadHomePage(_currUser);
+          _notification = 'Please verify your account before logging in';
+          _setLoading(false);
         }
       } catch (e) {
         print(e);
         if (e.code == "ERROR_USER_NOT_FOUND") {
-          _notification = "Account not found. "
-              "Please ensure you have entered a valid email.";
+          _notification = 'Account not found. Please ensure you have entered a valid email.';
         } else {
           _notification = e.message ?? e.toString();
         }
@@ -182,8 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onSaved: (input) {
           _password = input;
         },
-        //TODO: turn on password validator before releasing live
-        //validator: PasswordValidator.validate,
+        validator: PasswordValidator.validate,
       ),
     );
   }

@@ -250,6 +250,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
@@ -274,11 +275,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       chatSessionID: _chatSessionID,
                       userID: widget.userID,
                     ),
+                    _userInputBar(),
                   ],
                 ),
               ),
             ),
-      bottomNavigationBar: SafeArea(child: _userInputBar()),
     );
   }
 
@@ -390,7 +391,7 @@ class _BuildMessagesState extends State<BuildMessages> {
               bottomLeft: Radius.circular(15.0),
               bottomRight: isMe ? Radius.circular(0) : Radius.circular(15.0),
             ),
-            elevation: 5.0,
+            elevation: 1.0,
             color: isMe ? primaryColorLight : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
