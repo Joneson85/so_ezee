@@ -339,11 +339,7 @@ class _QuoteLabelUserState extends State<QuoteLabelUser> {
           title: Text("Book selected vendor?"),
           actions: <Widget>[
             FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                side: BorderSide(color: Colors.black, width: 0.5),
-              ),
-              child: Text("Ok", style: TextStyle(color: primaryColor)),
+              child: Text("Ok"),
               onPressed: () async {
                 _bookingDialog(context);
                 bool booked = await _bookQuote(
