@@ -231,49 +231,53 @@ class _QuoteLabelUserState extends State<QuoteLabelUser> {
     return Row(
       children: <Widget>[
         //User can only chat with vendors on quotes that are open/booked
-        Expanded(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(10, 5, 7.5, 5),
-            child: FlatButton(
-              disabledColor: Colors.grey[300],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                side: BorderSide(color: Colors.black, width: 0.5),
-              ),
-              child: Text(
-                'Contact vendor',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                  color: primaryColor,
+        allowChat
+            ? Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 5, 7.5, 5),
+                  child: FlatButton(
+                    disabledColor: Colors.grey[300],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: BorderSide(color: Colors.black, width: 0.5),
+                    ),
+                    child: Text(
+                      'Contact vendor',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: primaryColor,
+                      ),
+                    ),
+                    onPressed: () => _initiateChat(context),
+                  ),
                 ),
-              ),
-              onPressed: allowChat ? () => _initiateChat(context) : null,
-            ),
-          ),
-        ),
+              )
+            : SizedBox.shrink(),
         //User can only book quotes that are still open
-        Expanded(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(7.5, 5, 10, 5),
-            child: FlatButton(
-              color: primaryColorDark,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                side: BorderSide(color: Colors.black, width: 0.5),
-              ),
-              child: Text(
-                'Book',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+        allowBook
+            ? Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(7.5, 5, 10, 5),
+                  child: FlatButton(
+                    color: primaryColorDark,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: BorderSide(color: Colors.black, width: 0.5),
+                    ),
+                    child: Text(
+                      'Book',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () => _confirmDialog(context),
+                  ),
                 ),
-              ),
-              onPressed: allowBook ? () => _confirmDialog(context) : null,
-            ),
-          ),
-        ),
+              )
+            : SizedBox.shrink(),
       ],
     );
   }
