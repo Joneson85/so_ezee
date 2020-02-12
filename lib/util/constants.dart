@@ -88,6 +88,7 @@ const String kDB_reviewed = 'reviewed';
 const String kDB_booked_vendor = 'booked_vendor';
 const String kDB_description = 'description';
 const String kDB_attached_image_urls = 'attached_image_urls';
+const String kDB_completed = 'completed';
 //Handyman related constants
 const String kDB_handyman_strID = 'handyman';
 const String kDB_install_strID = 'install';

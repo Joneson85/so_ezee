@@ -440,26 +440,35 @@ class _QuoteLabelUserState extends State<QuoteLabelUser> {
       await reqDoc.updateData({kDB_booked_vendor: vendorID});
       await reqDoc.get().then(
         (reqDocData) {
-          if (reqDocData.exists && reqDocData[kDB_vendors] != null) {
-            List<String> otherVendors = List.from(reqDocData[kDB_vendors]);
-            //Get all other vendors who have quoted this request
-            otherVendors.remove(vendorID);
-            //Set other quotes to "rejected"
-            for (var vendor in otherVendors) {
-              db
-                  .collection(kDB_quotes)
-                  .where(kDB_requestid, isEqualTo: requestID)
-                  .where(kDB_vendorid, isEqualTo: vendor)
-                  .getDocuments()
-                  .then(
-                (resultsSnapshot) async {
-                  for (var quote in resultsSnapshot.documents) {
-                    await quote.reference.updateData(
-                      {kDB_status: kDB_rejected},
-                    );
-                  }
-                },
-              );
+          if (reqDocData.exists) {
+            //Updating the normalised request data in user's request inbox
+            DocumentReference inboxDocRef = db
+                .collection(kDB_users)
+                .document(reqDocData[kDB_userid])
+                .collection(kDB_request_inbox)
+                .document(reqDocData.documentID);
+            inboxDocRef.updateData({kDB_status: kDB_booked});
+            if (reqDocData[kDB_vendors] != null) {
+              List<String> otherVendors = List.from(reqDocData[kDB_vendors]);
+              //Get all other vendors who have quoted this request
+              otherVendors.remove(vendorID);
+              //Set other quotes to "rejected"
+              for (var vendor in otherVendors) {
+                db
+                    .collection(kDB_quotes)
+                    .where(kDB_requestid, isEqualTo: requestID)
+                    .where(kDB_vendorid, isEqualTo: vendor)
+                    .getDocuments()
+                    .then(
+                  (resultsSnapshot) async {
+                    for (var quote in resultsSnapshot.documents) {
+                      await quote.reference.updateData(
+                        {kDB_status: kDB_rejected},
+                      );
+                    }
+                  },
+                );
+              }
             }
           }
         },
