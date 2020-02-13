@@ -41,6 +41,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210453067156:android:6d3871b6495a6e96fecb81",
+        "android_client_info": {
+          "package_name": "com.soezee.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210453067156-4hl1ce03vcaiufvnse1pq3c6hrsfc6p9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrOjkoM-RYJlYmUdzWXIERPNO-yfuD1bs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210453067156-4hl1ce03vcaiufvnse1pq3c6hrsfc6p9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "210453067156-ardhdj48u52ujnm4koepiuehkrip30jc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.soEzee"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

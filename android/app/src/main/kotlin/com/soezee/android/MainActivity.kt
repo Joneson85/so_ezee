@@ -1,4 +1,4 @@
-package com.example.so_ezee
+package com.soezee.android
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
