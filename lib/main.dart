@@ -20,6 +20,7 @@ class Homerly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: soEzeeTheme,
       initialRoute: kStartScreen_route_id,
       routes: {
