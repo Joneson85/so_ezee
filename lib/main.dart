@@ -12,11 +12,11 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(Homerly());
+    runApp(SoEzee());
   });
 }
 
-class Homerly extends StatelessWidget {
+class SoEzee extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
