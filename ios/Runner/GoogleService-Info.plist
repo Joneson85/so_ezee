@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>210453067156-ardhdj48u52ujnm4koepiuehkrip30jc.apps.googleusercontent.com</string>
+	<string>724067054499-agtdmprptt5v157767qkg23ntsu0qtuk.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.210453067156-ardhdj48u52ujnm4koepiuehkrip30jc</string>
+	<string>com.googleusercontent.apps.724067054499-agtdmprptt5v157767qkg23ntsu0qtuk</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBu86dYzy70EZ8b0IbD3B2k6p7Pbf3WNFw</string>
+	<string>AIzaSyCC3u3iQxII4OiCVXWh0j7exY8_zbqv9Lc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>210453067156</string>
+	<string>724067054499</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.soEzee</string>
 	<key>PROJECT_ID</key>
-	<string>so-ezee</string>
+	<string>so-ezee-development</string>
 	<key>STORAGE_BUCKET</key>
-	<string>so-ezee.appspot.com</string>
+	<string>so-ezee-development.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:210453067156:ios:0e2cd676e907417efecb81</string>
+	<string>1:724067054499:ios:7d06c89610feb676a8e016</string>
 	<key>DATABASE_URL</key>
-	<string>https://so-ezee.firebaseio.com</string>
+	<string>https://so-ezee-development.firebaseio.com</string>
 </dict>
 </plist>
