@@ -30,41 +30,7 @@ class _SoEzeeState extends State<SoEzee> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        setState(() {
-          _messageText = "ON MESSAGE: $message";
-        });
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        setState(() {
-          _messageText = "ON LAUNCH: $message";
-        });
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        setState(() {
-          _messageText = "ON RESUME: $message";
-        });
-        print("onResume: $message");
-      },
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    _firebaseMessaging.getToken().then(
-      (String token) {
-        assert(token != null);
-        setState(() {
-          _homeScreenText = "Push Messaging token: $token";
-        });
-        print(_homeScreenText);
-      },
-    );
+   
   }
 
   @override

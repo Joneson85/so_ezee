@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:so_ezee/util/ui_constants.dart';
+import 'package:so_ezee/util/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(Key key)
@@ -11,9 +14,50 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   @override
   void initState() {
     super.initState();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      if (token != null) _saveToken(token);
+    });
+  }
+
+  _saveToken(String fcmToken) async {
+    var prefs = await SharedPreferences.getInstance();
+    String userID = prefs.getString(kPrefs_userID) ?? '';
+    if (userID.isNotEmpty) {
+      DocumentReference userRef = db.collection(kDB_users).document(userID);
+      DocumentSnapshot userSnapshot = await userRef.get();
+      if (userSnapshot.exists) {
+        if (userSnapshot['push_token'] != fcmToken) {
+          print('saving token');
+          userRef.setData(
+            {'push_token': fcmToken},
+            merge: true,
+          );
+        }
+      }
+    }
   }
 
   @override
