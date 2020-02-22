@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:so_ezee/screens/start_screen.dart';
@@ -27,7 +28,18 @@ class _SoEzeeState extends State<SoEzee> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: soEzeeTheme,
-      initialRoute: kStartScreen_route_id,
+      //If user is already logged in, show the homescreen instead of starting screen
+      //This prevents the user from having to log in again if the app is killed and
+      //reloaded
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.onAuthStateChanged,
+        builder: (context, firebaseUser) {
+          if (firebaseUser != null)
+            return MainNavController();
+          else
+            return StartScreen();
+        },
+      ),
       routes: {
         kStartScreen_route_id: (context) => StartScreen(),
         kLoginScreen_route_id: (context) => LoginScreen(),

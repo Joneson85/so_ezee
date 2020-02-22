@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -20,28 +21,24 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
+      onMessage: (Map<String, dynamic> message) async {},
+      onLaunch: (Map<String, dynamic> message) async {},
+      onResume: (Map<String, dynamic> message) async {},
     );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
+    if (Platform.isIOS) {
+      _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true),
+      );
+      _firebaseMessaging.onIosSettingsRegistered
+          .listen((IosNotificationSettings settings) {});
+    }
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
       if (token != null) _saveToken(token);
     });
   }
 
+  //Saves the push token to user's profile in Firestore
   _saveToken(String fcmToken) async {
     var prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString(kPrefs_userID) ?? '';
@@ -50,11 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
       DocumentSnapshot userSnapshot = await userRef.get();
       if (userSnapshot.exists) {
         if (userSnapshot['push_token'] != fcmToken) {
-          print('saving token');
-          userRef.setData(
-            {'push_token': fcmToken},
-            merge: true,
-          );
+          //Set merge: true to prevent modifying existing data
+          userRef.setData({'push_token': fcmToken}, merge: true);
         }
       }
     }
