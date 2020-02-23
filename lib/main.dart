@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart';
-=======
->>>>>>> parent of f9bfac2... Push notification enabled
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:so_ezee/screens/start_screen.dart';
@@ -20,16 +17,12 @@ void main() {
   });
 }
 
-<<<<<<< HEAD
 class SoEzee extends StatefulWidget {
   @override
   _SoEzeeState createState() => _SoEzeeState();
 }
 
 class _SoEzeeState extends State<SoEzee> {
-=======
-class SoEzee extends StatelessWidget {
->>>>>>> parent of f9bfac2... Push notification enabled
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
