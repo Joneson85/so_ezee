@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+=======
+>>>>>>> parent of f9bfac2... Push notification enabled
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:so_ezee/util/ui_constants.dart';
@@ -18,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
+<<<<<<< HEAD
   void initState() {
     super.initState();
     _firebaseMessaging.configure(
@@ -55,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+=======
+>>>>>>> parent of f9bfac2... Push notification enabled
   Widget build(BuildContext context) {
     const _headerStyle = TextStyle(
       fontSize: 16,
