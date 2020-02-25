@@ -125,6 +125,7 @@ const String kDefaultDateFormat = 'dd-MMM-yyyy hh:mm';
 const String kPrefs_isVendor = 'isVendor';
 const String kPrefs_userID = 'userID';
 const String kPrefs_userDisplayName = 'userDisplayName';
+const String kPrefs_firstLogIn = 'firstLogIn';
 
 //Asset paths
 const String kUserPlaceholderImage = 'images/user_placeholder.jpg';
