@@ -44,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             .document(user.uid)
             .get();
         if (userDoc.exists) {
+          await prefs.setBool(kPrefs_firstLogIn, false);
           await prefs.setString(kPrefs_userID, user.uid);
           await prefs.setBool(
             kPrefs_isVendor,
@@ -89,7 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
       } catch (e) {
         print(e);
         if (e.code == "ERROR_USER_NOT_FOUND") {
-          _notification = 'Account not found. Please ensure you have entered a valid email.';
+          _notification =
+              'Account not found. Please ensure you have entered a valid email.';
         } else {
           _notification = e.message ?? e.toString();
         }

@@ -48,6 +48,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return _loading
+        ? Center(child: CircularProgressIndicator())
+        : FutureBuilder(
+            future: db.collection(kDB_users).document(_userID).get(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
+              _isVendor
+                  ? _userObj = Vendor.fromDoc(snapshot.data)
+                  : _userObj = User.fromDoc(snapshot.data);
+              return Scaffold(
+                appBar: AppBar(
+                  leading: null,
+                  automaticallyImplyLeading: false,
+                  title: Text(
+                    "Profile & Settings",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                  iconTheme: IconThemeData(color: primaryColor),
+                ),
+                body: SafeArea(
+                  minimum: EdgeInsets.all(10),
+                  child: ListView(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          SizedBox(height: 10),
+                          _displayProfileImage(),
+                          SizedBox(height: 25),
+                          _displayName(),
+                          SizedBox(height: 25),
+                          _isVendor ? _displayRatings() : SizedBox.shrink(),
+                          SizedBox(height: 25),
+                        ],
+                      ),
+                      Divider(thickness: 1.5),
+                      _displayEditProfile(),
+                      const Divider(thickness: 1.5, indent: 25, endIndent: 25),
+                      _isVendor ? _displayEditBio() : SizedBox.shrink(),
+                      _isVendor
+                          ? const Divider(
+                              thickness: 1.5, indent: 25, endIndent: 25)
+                          : SizedBox.shrink(),
+                      _contactUsListTile(),
+                      const Divider(thickness: 1.5, indent: 25, endIndent: 25),
+                      _signOutListTile(),
+                      const Divider(thickness: 1.5, indent: 25, endIndent: 25),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+  }
+
   void _showReviews() {
     MaterialPageRoute route;
     //New route to show list of reviews
@@ -237,62 +299,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return _loading
-        ? Center(child: CircularProgressIndicator())
-        : FutureBuilder(
-            future: db.collection(kDB_users).document(_userID).get(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
-              }
-              _isVendor
-                  ? _userObj = Vendor.fromDoc(snapshot.data)
-                  : _userObj = User.fromDoc(snapshot.data);
-              return Scaffold(
-                appBar: AppBar(
-                  leading: null,
-                  automaticallyImplyLeading: false,
-                  title: Text("Profile & Settings",
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      )),
-                  iconTheme: IconThemeData(color: primaryColor),
-                ),
-                body: SafeArea(
-                  minimum: EdgeInsets.all(10),
-                  child: ListView(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          SizedBox(height: 10),
-                          _displayProfileImage(),
-                          SizedBox(height: 25),
-                          _displayName(),
-                          SizedBox(height: 25),
-                          _isVendor ? _displayRatings() : SizedBox.shrink(),
-                          SizedBox(height: 25),
-                        ],
-                      ),
-                      Divider(thickness: 1.5),
-                      _displayEditProfile(),
-                      const Divider(thickness: 1.5, indent: 25, endIndent: 25),
-                      _isVendor ? _displayEditBio() : SizedBox.shrink(),
-                      _isVendor
-                          ? const Divider(
-                              thickness: 1.5, indent: 25, endIndent: 25)
-                          : SizedBox.shrink(),
-                      _contactUsListTile(),
-                      const Divider(thickness: 1.5, indent: 25, endIndent: 25),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
+  Widget _signOutListTile() {
+    return ListTile(
+      leading: Icon(
+        Icons.close,
+        color: Theme.of(context).primaryColor,
+      ),
+      title: Text(
+        "Sign out",
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      ),
+      trailing: Icon(
+        Icons.arrow_forward_ios,
+        color: Theme.of(context).primaryColor,
+      ),
+      onTap: () => _confirmSignOutDialog(),
+    );
+  }
+
+  Future<void> _confirmSignOutDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Log out of this account?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Ok"),
+              onPressed: () async {
+                _loading = true;
+                await FirebaseAuth.instance.signOut();
+                await _prefs.clear();
+                Navigator.popAndPushNamed(context, kStartScreen_route_id);
+              },
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
