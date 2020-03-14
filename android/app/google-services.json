@@ -1,38 +1,74 @@
 {
   "project_info": {
-    "project_number": "724067054499",
-    "firebase_url": "https://so-ezee-development.firebaseio.com",
-    "project_id": "so-ezee-development",
-    "storage_bucket": "so-ezee-development.appspot.com"
+    "project_number": "210453067156",
+    "firebase_url": "https://so-ezee.firebaseio.com",
+    "project_id": "so-ezee",
+    "storage_bucket": "so-ezee.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:724067054499:android:a4303683b1526133a8e016",
+        "mobilesdk_app_id": "1:210453067156:android:9de5a7cb32442857fecb81",
         "android_client_info": {
-          "package_name": "com.soezee.android"
+          "package_name": "com.example.so_ezee"
         }
       },
       "oauth_client": [
         {
-          "client_id": "724067054499-tiq7g7abojb83e1h9h65o8j37kaus6ps.apps.googleusercontent.com",
+          "client_id": "210453067156-4hl1ce03vcaiufvnse1pq3c6hrsfc6p9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB7kMK8eeuqzUIDJovHLfoxFzZe4Xa2oq8"
+          "current_key": "AIzaSyCrOjkoM-RYJlYmUdzWXIERPNO-yfuD1bs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "724067054499-tiq7g7abojb83e1h9h65o8j37kaus6ps.apps.googleusercontent.com",
+              "client_id": "210453067156-4hl1ce03vcaiufvnse1pq3c6hrsfc6p9.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "724067054499-agtdmprptt5v157767qkg23ntsu0qtuk.apps.googleusercontent.com",
+              "client_id": "210453067156-ardhdj48u52ujnm4koepiuehkrip30jc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.soEzee"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210453067156:android:6d3871b6495a6e96fecb81",
+        "android_client_info": {
+          "package_name": "com.soezee.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210453067156-4hl1ce03vcaiufvnse1pq3c6hrsfc6p9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrOjkoM-RYJlYmUdzWXIERPNO-yfuD1bs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210453067156-4hl1ce03vcaiufvnse1pq3c6hrsfc6p9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "210453067156-ardhdj48u52ujnm4koepiuehkrip30jc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.soEzee"
